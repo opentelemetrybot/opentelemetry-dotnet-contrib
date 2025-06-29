@@ -14,8 +14,10 @@ on:
     secrets:
       OPENTELEMETRYBOT_GITHUB_TOKEN:
         required: false
+
 permissions:
   contents: read
+
 jobs:
   resolve-automation:
 
