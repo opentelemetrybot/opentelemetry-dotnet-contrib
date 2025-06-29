@@ -10,10 +10,15 @@ on:
     - cron: '0 0 * * *' # once in a day at 00:00
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: Analyze
     runs-on: windows-latest
+    permissions:
+      security-events: write
 
     strategy:
       fail-fast: false
