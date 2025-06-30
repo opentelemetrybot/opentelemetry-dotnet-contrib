@@ -36,7 +36,7 @@ jobs:
 
   add-labels-on-pull-requests:
     permissions:
-      pull-requests: write # required for adding labels to pull requests
+      pull-requests: write
     if: github.event_name == 'pull_request_target'
 
     runs-on: ubuntu-22.04
