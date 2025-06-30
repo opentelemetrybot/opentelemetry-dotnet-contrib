@@ -10,12 +10,18 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
   automation:
     uses: ./.github/workflows/automation.yml
     secrets: inherit
 
   post-release:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-22.04
 
     needs:

@@ -8,12 +8,18 @@ on:
         description: 'Release tag'
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   automation:
     uses: ./.github/workflows/automation.yml
     secrets: inherit
 
   core-version-update:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-22.04
 
     needs: automation
