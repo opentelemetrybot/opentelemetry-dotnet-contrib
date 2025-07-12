@@ -7,13 +7,15 @@ on:
     branches: [ 'main*', 'instrumentation*', 'exporter*', 'extensions*' ]
 
 permissions:
-  issues: write
-  pull-requests: write
+  contents: read
 
 jobs:
   add-labels-on-issues:
     if: github.event_name == 'issues' && !github.event.issue.pull_request
-
+    
+    permissions:
+      issues: write # required for adding labels to issues
+    
     runs-on: ubuntu-22.04
 
     steps:
@@ -35,7 +37,10 @@ jobs:
 
   add-labels-on-pull-requests:
     if: github.event_name == 'pull_request_target'
-
+    
+    permissions:
+      pull-requests: write # required for adding labels to pull requests
+    
     runs-on: ubuntu-22.04
 
     steps:
