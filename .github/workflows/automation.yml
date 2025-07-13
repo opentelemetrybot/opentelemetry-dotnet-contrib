@@ -5,8 +5,8 @@ on:
     outputs:
       enabled:
         value: ${{ jobs.resolve-automation.outputs.enabled == 'true' }}
-      token:
-        value: ${{ jobs.resolve-automation.outputs.token }}
+      token-secret-name:
+        value: ${{ jobs.resolve-automation.outputs.token-secret-name }}
       username:
         value: ${{ vars.AUTOMATION_USERNAME }}
       email:
@@ -22,15 +22,14 @@ jobs:
 
     outputs:
       enabled: ${{ steps.evaluate.outputs.enabled }}
-      token: ${{ steps.otelbot-token.outputs.token }}
+      token-secret-name: ${{ steps.otelbot-token.outputs.token }}
 
     steps:
-    - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2.0.6
+    - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e  # v2.0.6
       id: otelbot-token
       with:
         app-id: ${{ vars.OTELBOT_APP_ID }}
         private-key: ${{ secrets.OTELBOT_PRIVATE_KEY }}
-        
     - id: evaluate
       env:
         OTELBOT_TOKEN_EXISTS: ${{ steps.otelbot-token.outputs.token != '' }}

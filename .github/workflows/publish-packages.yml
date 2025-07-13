@@ -113,13 +113,13 @@ jobs:
     if: needs.automation.outputs.enabled && github.event_name == 'push'
 
     env:
-      GH_TOKEN: ${{ needs.automation.outputs.token }}
+      GH_TOKEN: ${{ needs.automation.outputs.token-secret-name }}
 
     steps:
       - name: check out code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          token: ${{ needs.automation.outputs.token }}
+          token: ${{ needs.automation.outputs.token-secret-name }}
 
       - name: Download Artifacts
         run: |
