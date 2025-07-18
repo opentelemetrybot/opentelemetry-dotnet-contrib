@@ -26,6 +26,9 @@ jobs:
 
     if: needs.automation.outputs.enabled
 
+    permissions:
+      contents: write # required for pushing changes
+
     env:
       GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
 

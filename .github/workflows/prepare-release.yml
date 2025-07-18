@@ -90,6 +90,9 @@ jobs:
 
     if: github.event_name == 'workflow_dispatch' && needs.automation.outputs.enabled
 
+    permissions:
+      contents: write # required for pushing changes
+
     env:
       GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
 
@@ -161,6 +164,9 @@ jobs:
       && github.event.issue.pull_request.merged_at
       && needs.automation.outputs.enabled
 
+    permissions:
+      contents: write # required for pushing changes
+
     env:
       GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
 
@@ -199,6 +205,9 @@ jobs:
       && startsWith(github.event.issue.title, '[release] Prepare release ')
       && github.event.issue.pull_request.merged_at == null
       && needs.automation.outputs.enabled
+
+    permissions:
+      contents: write # required for pushing changes
 
     env:
       GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
@@ -242,6 +251,9 @@ jobs:
           && contains(github.event.comment.body, '/PrepareRelease')
           && github.event.comment.user.login != needs.automation.outputs.username)
       )
+
+    permissions:
+      contents: write # required for pushing changes
 
     env:
       GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
