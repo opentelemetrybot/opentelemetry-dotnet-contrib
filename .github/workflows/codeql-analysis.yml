@@ -19,6 +19,8 @@ jobs:
     permissions:
       security-events: write # for github/codeql-action/analyze to upload SARIF results
     runs-on: windows-latest
+    permissions:
+      security-events: write # for github/codeql-action/analyze to upload SARIF results
 
     strategy:
       fail-fast: false
