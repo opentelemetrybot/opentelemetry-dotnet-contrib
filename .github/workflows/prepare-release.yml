@@ -81,7 +81,8 @@ permissions:
 jobs:
   automation:
     uses: ./.github/workflows/automation.yml
-    secrets: inherit
+    secrets:
+      OTELBOT_PRIVATE_KEY: ${{ secrets.OTELBOT_PRIVATE_KEY }}
 
   prepare-release-pr:
     runs-on: ubuntu-22.04
@@ -91,13 +92,13 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && needs.automation.outputs.enabled
 
     env:
-      GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+      GH_TOKEN: ${{ needs.automation.outputs.token }}
 
     steps:
     - name: check out code
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
-        token: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+        token: ${{ needs.automation.outputs.token }}
 
     - name: Create GitHub Pull Request to prepare release
       shell: pwsh
@@ -128,13 +129,13 @@ jobs:
       && needs.automation.outputs.enabled
 
     env:
-      GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+      GH_TOKEN: ${{ needs.automation.outputs.token }}
 
     steps:
     - name: check out code
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
-        token: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+        token: ${{ needs.automation.outputs.token }}
 
     - name: Lock GitHub Pull Request to prepare release
       shell: pwsh
@@ -162,7 +163,7 @@ jobs:
       && needs.automation.outputs.enabled
 
     env:
-      GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+      GH_TOKEN: ${{ needs.automation.outputs.token }}
 
     steps:
     - name: check out code
@@ -170,7 +171,7 @@ jobs:
       with:
         # Note: By default GitHub only fetches 1 commit which fails the git tag operation below
         fetch-depth: 0
-        token: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+        token: ${{ needs.automation.outputs.token }}
 
     - name: Create release tag
       id: create-tag
@@ -201,7 +202,7 @@ jobs:
       && needs.automation.outputs.enabled
 
     env:
-      GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+      GH_TOKEN: ${{ needs.automation.outputs.token }}
 
     steps:
     - name: check out code
@@ -209,7 +210,7 @@ jobs:
       with:
         # Note: By default GitHub only fetches 1 commit which fails the git tag operation below
         fetch-depth: 0
-        token: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+        token: ${{ needs.automation.outputs.token }}
 
     - name: Update release date
       id: create-tag
@@ -244,13 +245,13 @@ jobs:
       )
 
     env:
-      GH_TOKEN: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+      GH_TOKEN: ${{ needs.automation.outputs.token }}
 
     steps:
     - name: check out code
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
-        token: ${{ secrets[needs.automation.outputs.token-secret-name] }}
+        token: ${{ needs.automation.outputs.token }}
 
     - name: Process release request issue being opened or commented
       shell: pwsh
